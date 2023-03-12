@@ -33,6 +33,7 @@ public class BasicExceptionAdvice {
      */
     @ExceptionHandler(NcException.class)
     public Result<String> handlerRuntimeErr(NcException e) {
+        log.error(e.getMessage());
         return Result.errorCodeMessage(e.getCode(), e.getMessage());
     }
 }
