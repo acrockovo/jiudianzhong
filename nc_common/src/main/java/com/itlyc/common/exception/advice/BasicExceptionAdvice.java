@@ -1,14 +1,12 @@
 package com.itlyc.common.exception.advice;
 
 import com.itlyc.common.vo.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * @author: itlyc
- * @create: 2021-07-23 12:07
- */
+@Slf4j
 @ResponseBody
 @ControllerAdvice  //对controller层进行AOP增强，异常通知
 public class BasicExceptionAdvice {

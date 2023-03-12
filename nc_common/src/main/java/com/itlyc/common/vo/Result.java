@@ -57,10 +57,6 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
-
-
-    //TODO 问题:响应结果在controller方法中需要每次都new 解决：抽取静态方法代表成功 或者 失败结果
-
     public static <T> Result<T> success() {
         return new Result<T>(true, ResponseEnum.SUCCESS.getCode());
     }
