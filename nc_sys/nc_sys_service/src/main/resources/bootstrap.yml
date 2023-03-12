@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: sys-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 2d407409-7647-4de8-ac07-fe3ce4e75d2f
+      config:
+        server-addr: 127.0.0.1:8848 # 配置中心地址
+        file-extension: yaml
+        namespace: 2d407409-7647-4de8-ac07-fe3ce4e75d2f
+        group: NC_GROUP
+        ext-config:
+          - refresh: true
+            data-id: sys-server-port.yaml
+            group: NC_GROUP
+          - refresh: true
+            data-id: sys-dataSource.yaml
+            group: NC_GROUP
+          - refresh: true
+            data-id: sys-mybatis.yaml
+            group: NC_GROUP
+          - refresh: true
+            data-id: sys-log.yaml
+            group: NC_GROUP
+
+
+

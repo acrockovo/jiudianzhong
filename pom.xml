@@ -10,6 +10,7 @@
     <modules>
         <module>nc_gateway</module>
         <module>nc_common</module>
+        <module>nc_sys</module>
     </modules>
     <packaging>pom</packaging>
 
