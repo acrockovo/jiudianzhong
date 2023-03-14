@@ -6,6 +6,7 @@ import com.itlyc.common.vo.Result;
 import com.itlyc.service.UserService;
 import com.itlyc.sys.entity.UserDomain;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,7 @@ public class TestController {
         return Result.success("hello sys");
     }
 
+    @PreAuthorize("hasAnyAuthority('p1')")
     @PostMapping("/test/user")
     public Result saveUser(@RequestBody UserDomain user){
 

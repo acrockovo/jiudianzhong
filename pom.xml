@@ -11,6 +11,7 @@
         <module>nc_gateway</module>
         <module>nc_common</module>
         <module>nc_sys</module>
+        <module>nc_auth</module>
     </modules>
     <packaging>pom</packaging>
 

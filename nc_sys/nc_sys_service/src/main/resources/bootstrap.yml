@@ -24,6 +24,9 @@ spring:
           - refresh: true
             data-id: sys-log.yaml
             group: NC_GROUP
+          - refresh: true
+            data-id: nc-gateway.yaml
+            group: NC_GROUP
 
 
 
