@@ -14,8 +14,8 @@ import java.util.List;
  * 企业员工DTO对象
  * </p>
  *
- * @author itheima
- * @since 2021-03-06
+ * @author lyc
+ * @since 2022-03-06
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

@@ -10,8 +10,8 @@ import lombok.EqualsAndHashCode;
  * 行业字典表 企业-行业字典表
  * </p>
  *
- * @author itheima
- * @since 2021-07-25
+ * @author lyc
+ * @since 2022-07-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
