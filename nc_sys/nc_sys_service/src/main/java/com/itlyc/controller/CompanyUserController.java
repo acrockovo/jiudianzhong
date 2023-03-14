@@ -20,7 +20,7 @@ public class CompanyUserController {
      * @param userName 手机号
      * @return
      */
-    @PostMapping("/user/query")
+    @GetMapping("/user/query")
     public Result<CompanyUserDTO> querySysUser(@RequestParam("username") String userName){
         return Result.success(companyUserService.querySysUser(userName));
     }
