@@ -9,4 +9,8 @@
             #{id}
         </foreach>
     </select>
+
+    <select id="findRoleByCompanyId" resultType="com.itlyc.sys.entity.Role">
+        select * from sys_role where company_id = #{companyId}
+    </select>
 </mapper>
