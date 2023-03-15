@@ -2,6 +2,7 @@ package com.itlyc.service.impl;
 
 import com.itlyc.common.exception.advice.NcException;
 import com.itlyc.common.exception.enums.ResponseEnum;
+import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.mapper.CompanyUserMapper;
 import com.itlyc.service.CompanyUserService;
 import com.itlyc.service.FunctionService;
@@ -15,10 +16,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,5 +75,24 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         }
 
         return companyUserDTO;
+    }
+
+    /**
+     * 查询当前企业下所有的管理员用户
+     * @return
+     */
+    @Override
+    public List<CompanyUserDTO> queryCompanyAdmins() {
+        // 管理员
+        String roleNameLike = "ROLE_ADMIN_%";
+        Long companyId = UserHolder.getCompanyId();
+        List<CompanyUserDTO> companyUserDTOList = companyUserMapper.queryCompanyAdmins(roleNameLike, companyId);
+        if(!CollectionUtils.isEmpty(companyUserDTOList)){
+            for (CompanyUserDTO companyUserDTO : companyUserDTOList) {
+                List<Role> roleList = roleService.findRoleByIds(Arrays.asList(StringUtils.split(companyUserDTO.getRoleIds(),",")));
+                companyUserDTO.setSysRoles(roleList);
+            }
+        }
+        return companyUserDTOList;
     }
 }

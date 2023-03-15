@@ -6,4 +6,10 @@
     <select id="findSysUser" resultType="com.itlyc.sys.entity.CompanyUser">
         select * from sys_company_user where mobile = #{userName}
     </select>
+
+    <select id="queryCompanyAdmins" resultType="com.itlyc.sys.dto.CompanyUserDTO">
+        SELECT DISTINCT cu.* from sys_company_user cu INNER JOIN (select sr.id from sys_role sr
+         where sr.role_name LIKE #{roleNameLike} and sr.company_id = #{companyId}) temp on FIND_IN_SET(temp.id, cu.role_ids)
+          where cu.company_id = #{companyId}
+    </select>
 </mapper>
