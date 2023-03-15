@@ -2,6 +2,7 @@ package com.itlyc.auth.integration.filter;
 
 import com.itlyc.auth.integration.entity.LoginInfo;
 import com.itlyc.auth.integration.threadlocals.LoginInfoHolder;
+import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.common.util.RequestParameterWrapper;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,7 @@ public class MyAuthFilter extends GenericFilterBean {
             filterChain.doFilter(request,response);
             // 删除threadlocal中保存的信息
             LoginInfoHolder.remove();
+            UserHolder.remove();
         }
     }
 }

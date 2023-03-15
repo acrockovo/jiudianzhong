@@ -5,10 +5,15 @@ import com.itlyc.auth.integration.entity.LoginInfo;
 import com.itlyc.auth.integration.threadlocals.LoginInfoHolder;
 import com.itlyc.common.exception.advice.NcException;
 import com.itlyc.common.exception.enums.ResponseEnum;
+import com.itlyc.common.threadLocals.UserHolder;
+import com.itlyc.common.util.BeanHelper;
+import com.itlyc.common.util.JsonUtils;
+import com.itlyc.common.vo.UserInfo;
 import com.itlyc.sys.dto.CompanyUserDTO;
 import com.itlyc.sys.entity.Role;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -51,7 +56,10 @@ public class MyUserDetailService implements UserDetailsService {
             authorityList =  Arrays.asList(new SimpleGrantedAuthority("ROLE_USER_TOURIST"));
         }
 
-        return new User(companyUserDTO.getUsername(),companyUserDTO.getPassword(),authorityList);
+        UserInfo userInfo = BeanHelper.copyProperties(companyUserDTO, UserInfo.class);
+        UserHolder.setUser(userInfo);
+
+        return new User(JsonUtils.toJsonStr(userInfo),companyUserDTO.getPassword(),authorityList);
     }
 
     /**
