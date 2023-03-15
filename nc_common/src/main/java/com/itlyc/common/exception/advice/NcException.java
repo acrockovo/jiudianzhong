@@ -8,7 +8,7 @@ import lombok.Data;
  * 自定义异常
  *
  * @author: itlyc
- * @create: 2021-07-23 12:13
+ * @create: 2022-07-23 12:13
  */
 @Data
 public class NcException extends RuntimeException {
