@@ -1,5 +1,7 @@
 package com.itlyc.service.impl;
 
+import com.itlyc.common.exception.advice.NcException;
+import com.itlyc.common.exception.enums.ResponseEnum;
 import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.common.util.BeanHelper;
 import com.itlyc.mapper.RoleMapper;
@@ -7,6 +9,7 @@ import com.itlyc.service.CompanyUserService;
 import com.itlyc.service.FunctionService;
 import com.itlyc.service.RoleService;
 import com.itlyc.sys.dto.RoleDTO;
+import com.itlyc.sys.dto.SysRoleEditDTO;
 import com.itlyc.sys.entity.CompanyUser;
 import com.itlyc.sys.entity.Function;
 import com.itlyc.sys.entity.Role;
@@ -56,5 +59,22 @@ public class RoleServiceImpl implements RoleService {
             }
         }
         return roleDTOS;
+    }
+
+    /**
+     * 修改角色信息
+     * @param sysRoleEditDTO 请求对象
+     */
+    @Override
+    public void updateRole(SysRoleEditDTO sysRoleEditDTO) {
+        Role role = BeanHelper.copyProperties(sysRoleEditDTO, Role.class);
+        List<String> functionIdList = sysRoleEditDTO.getFunctionIdList();
+        if(!CollectionUtils.isEmpty(functionIdList)){
+            role.setFunctionIds(String.join(",", functionIdList));
+        }
+        boolean b = roleMapper.updateRole(role);
+        if(!b){
+            throw new NcException(ResponseEnum.UPDATE_OPERATION_FAIL);
+        }
     }
 }
