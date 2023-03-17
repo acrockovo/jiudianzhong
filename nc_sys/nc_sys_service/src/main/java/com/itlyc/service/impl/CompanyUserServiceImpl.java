@@ -1,8 +1,12 @@
 package com.itlyc.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.itlyc.common.exception.advice.NcException;
 import com.itlyc.common.exception.enums.ResponseEnum;
 import com.itlyc.common.threadLocals.UserHolder;
+import com.itlyc.common.util.BeanHelper;
+import com.itlyc.common.vo.PageResult;
 import com.itlyc.mapper.CompanyUserMapper;
 import com.itlyc.service.CompanyUserService;
 import com.itlyc.service.FunctionService;
@@ -94,5 +98,24 @@ public class CompanyUserServiceImpl implements CompanyUserService {
             }
         }
         return companyUserDTOList;
+    }
+
+    /**
+     * 分页获取部门成员列表
+     * @param pageNum 页码
+     * @param pageSize 每页条数
+     * @return
+     */
+    @Override
+    public PageResult<CompanyUserDTO> queryCompanyMembersByPage(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        Long companyId = UserHolder.getCompanyId();
+        Page<CompanyUser> page = companyUserMapper.queryCompanyMembersByPage(companyId);
+        List<CompanyUser> companyUserList = page.getResult();
+        if(!CollectionUtils.isEmpty(companyUserList)){
+            List<CompanyUserDTO> companyUserDTOList = BeanHelper.copyWithCollection(page.getResult(), CompanyUserDTO.class);
+            return new PageResult<>(page.getTotal(), (long) page.getPages(),companyUserDTOList);
+        }
+        return null;
     }
 }

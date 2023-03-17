@@ -12,4 +12,8 @@
          where sr.role_name LIKE #{roleNameLike} and sr.company_id = #{companyId}) temp on FIND_IN_SET(temp.id, cu.role_ids)
           where cu.company_id = #{companyId}
     </select>
+
+    <select id="queryCompanyMembersByPage" resultType="com.itlyc.sys.entity.CompanyUser">
+        select * from sys_company_user where company_id = #{companyId}
+    </select>
 </mapper>
