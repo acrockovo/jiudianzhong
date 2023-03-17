@@ -9,4 +9,15 @@
             #{id}
         </foreach>
     </select>
+
+    <select id="findRoleByCompanyId" resultType="com.itlyc.sys.entity.Role">
+        select * from sys_role where company_id = #{companyId}
+    </select>
+
+    <update id="updateRole">
+        update sys_role set
+        role_name = #{roleName},
+        function_ids = #{functionIds}
+        where id = #{id}
+    </update>
 </mapper>

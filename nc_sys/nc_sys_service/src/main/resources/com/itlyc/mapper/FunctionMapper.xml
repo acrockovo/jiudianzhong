@@ -9,4 +9,8 @@
             #{id}
         </foreach>
     </select>
+
+    <select id="findFunctionByCompanyId" resultType="com.itlyc.sys.entity.Function">
+        select * from sys_function where company_id = #{companyId}
+    </select>
 </mapper>

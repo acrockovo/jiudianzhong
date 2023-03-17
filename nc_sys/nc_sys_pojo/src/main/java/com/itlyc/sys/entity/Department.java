@@ -13,8 +13,8 @@ import lombok.EqualsAndHashCode;
  * 部门表
  * </p>
  *
- * @author itheima
- * @since 2021-07-25
+ * @author lyc
+ * @since 2022-07-25
  */
 @Data
 @EqualsAndHashCode(callSuper = false)

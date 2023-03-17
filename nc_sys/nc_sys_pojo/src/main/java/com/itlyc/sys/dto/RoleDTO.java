@@ -1,31 +1,29 @@
-package com.itlyc.sys.entity;
+package com.itlyc.sys.dto;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+import com.itlyc.sys.entity.Function;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
  * 角色表
  * </p>
  *
- * @author lyc
- * @since 2022-07-25
+ * @author itheima
+ * @since 2020-12-04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@TableName("sys_role")
-public class Role implements Serializable {
+public class RoleDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * id id
      */
-    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
@@ -43,10 +41,16 @@ public class Role implements Serializable {
      */
     private Long companyId;
 
+
     /**
      * 权限ID列表
      */
     private String functionIds;
+
+    /**
+     * 当前角色包含的权限
+     */
+    private List<Function> sysFunctionAbbrList;
 
 
 }

@@ -16,5 +16,8 @@ spring:
           - refresh: true
             data-id: gateway.yaml # 启动端口配置
             group: NC_GROUP
+          - refresh: true
+            data-id: cors-gateway.yaml # 启动端口配置
+            group: NC_GROUP
 
 

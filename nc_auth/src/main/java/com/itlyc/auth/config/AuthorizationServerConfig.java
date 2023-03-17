@@ -45,7 +45,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      *
      * @return
      */
-    @Bean
+    /*@Bean
     public UserDetailsService userDetailsService(){
         //在内存中提供自定义的用户名 密码
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -54,7 +54,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         manager.createUser(User.withUsername("jack").password(passwordEncoder().encode("jack")).authorities("p1").build());
         manager.createUser(User.withUsername("rose").password(passwordEncoder().encode("rose")).authorities("p2").build());
         return manager;
-    }
+    }*/
 
     /**
      * 配置客户端详情：移动端、web端，第三方应用 定义客户端ID，秘钥

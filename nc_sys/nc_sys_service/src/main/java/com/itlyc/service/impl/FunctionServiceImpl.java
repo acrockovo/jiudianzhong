@@ -1,5 +1,6 @@
 package com.itlyc.service.impl;
 
+import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.mapper.FunctionMapper;
 import com.itlyc.service.FunctionService;
 import com.itlyc.sys.entity.Function;
@@ -22,5 +23,14 @@ public class FunctionServiceImpl implements FunctionService {
     @Override
     public List<Function> findFunctionByIds(List<String> functionIdList) {
         return functionMapper.findFunctionByIds(functionIdList);
+    }
+
+    /**
+     * 根据企业id查询该公司下所有的权限列表
+     * @return
+     */
+    @Override
+    public List<Function> findFunctionByCompanyId() {
+        return functionMapper.findFunctionByCompanyId(UserHolder.getCompanyId());
     }
 }
