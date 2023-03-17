@@ -140,6 +140,7 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         companyUser.setRoleDesc(roleDesc);
         companyUser.setId(companyUserAdminDTO.getUserId());
         int i = companyUserMapper.updateRoleById(companyUser);
+
         return i;
     }
 }
