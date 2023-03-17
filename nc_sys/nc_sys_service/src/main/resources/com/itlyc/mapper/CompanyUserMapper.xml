@@ -16,4 +16,11 @@
     <select id="queryCompanyMembersByPage" resultType="com.itlyc.sys.entity.CompanyUser">
         select * from sys_company_user where company_id = #{companyId}
     </select>
+
+    <update id="updateRoleById">
+        update sys_company_user set
+        role_ids = #{roleIds},
+        role_desc =#{roleDesc}
+        where id = #{id}
+    </update>
 </mapper>

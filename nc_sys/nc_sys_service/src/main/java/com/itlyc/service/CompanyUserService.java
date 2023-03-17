@@ -1,6 +1,7 @@
 package com.itlyc.service;
 
 import com.itlyc.common.vo.PageResult;
+import com.itlyc.sys.dto.CompanyUserAdminDTO;
 import com.itlyc.sys.dto.CompanyUserDTO;
 
 import java.util.List;
@@ -12,4 +13,6 @@ public interface CompanyUserService {
     List<CompanyUserDTO> queryCompanyAdmins();
     // 分页获取部门成员列表
     PageResult<CompanyUserDTO> queryCompanyMembersByPage(Integer page, Integer pageSize);
+    // 新增子管理员
+    int addSubAdmin(CompanyUserAdminDTO companyUserAdminDTO);
 }

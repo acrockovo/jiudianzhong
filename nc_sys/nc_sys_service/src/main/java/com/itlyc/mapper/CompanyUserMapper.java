@@ -14,4 +14,6 @@ public interface CompanyUserMapper {
     List<CompanyUserDTO> queryCompanyAdmins(@Param("roleNameLike") String roleNameLike, @Param("companyId") Long companyId);
     // 根据企业id查询员工信息
     Page<CompanyUser> queryCompanyMembersByPage(Long companyId);
+    // 更新角色列表
+    int updateRoleById(CompanyUser companyUser);
 }

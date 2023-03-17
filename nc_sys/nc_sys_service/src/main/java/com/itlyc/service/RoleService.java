@@ -2,6 +2,7 @@ package com.itlyc.service;
 
 import com.itlyc.sys.dto.RoleDTO;
 import com.itlyc.sys.dto.SysRoleEditDTO;
+import com.itlyc.sys.entity.CompanyUser;
 import com.itlyc.sys.entity.Role;
 
 import java.util.List;

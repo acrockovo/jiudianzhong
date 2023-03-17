@@ -11,6 +11,7 @@ import com.itlyc.mapper.CompanyUserMapper;
 import com.itlyc.service.CompanyUserService;
 import com.itlyc.service.FunctionService;
 import com.itlyc.service.RoleService;
+import com.itlyc.sys.dto.CompanyUserAdminDTO;
 import com.itlyc.sys.dto.CompanyUserDTO;
 import com.itlyc.sys.entity.CompanyUser;
 import com.itlyc.sys.entity.Function;
@@ -20,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
@@ -117,5 +119,27 @@ public class CompanyUserServiceImpl implements CompanyUserService {
             return new PageResult<>(page.getTotal(), (long) page.getPages(),companyUserDTOList);
         }
         return null;
+    }
+
+    /**
+     * 新增子管理员
+     * @param companyUserAdminDTO 参数对象
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int addSubAdmin(CompanyUserAdminDTO companyUserAdminDTO) {
+        // 对角色进行去重操作
+        List<String> roleIds = companyUserAdminDTO.getRoleIds();
+        List<Role> roleList = roleService.findRoleByIds(roleIds);
+        // 将集合中的角色名称进行拼接
+        String roleDesc = roleList.stream().map(Role::getRoleDesc).collect(Collectors.joining(","));
+
+        CompanyUser companyUser = new CompanyUser();
+        String roleIdStr = roleIds.stream().collect(Collectors.joining(","));
+        companyUser.setRoleIds(roleIdStr);
+        companyUser.setRoleDesc(roleDesc);
+        companyUser.setId(companyUserAdminDTO.getUserId());
+        int i = companyUserMapper.updateRoleById(companyUser);
+        return i;
     }
 }
