@@ -10,4 +10,6 @@ public interface CompanyService {
     Company queryCurrentCompany();
     // 上传企业logo
     String uploadLogo(MultipartFile file) throws IOException;
+    // 修改企业信息
+    void updateCompany(Company company);
 }

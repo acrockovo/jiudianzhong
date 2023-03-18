@@ -10,6 +10,7 @@ import com.itlyc.sys.entity.Company;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -76,5 +77,18 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
         return url;
+    }
+
+    /**
+     * 修改企业信息
+     * @param company 企业信息对象
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateCompany(Company company) {
+        Long companyId = UserHolder.getCompanyId();
+        company.setId(companyId);
+        log.info("更新企业信息传入mapper对象-{}", company);
+        companyMapper.updateCompany(company);
     }
 }

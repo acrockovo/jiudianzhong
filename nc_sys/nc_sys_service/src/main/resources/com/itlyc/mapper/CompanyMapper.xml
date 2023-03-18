@@ -6,4 +6,10 @@
     <select id="queryCurrentCompany" resultType="com.itlyc.sys.entity.Company">
         select * from sys_company where id = #{companyId}
     </select>
+    <update id="updateCompany">
+        update sys_company set
+        name = #{name},
+        logo = #{logo}
+        where id = #{id}
+    </update>
 </mapper>

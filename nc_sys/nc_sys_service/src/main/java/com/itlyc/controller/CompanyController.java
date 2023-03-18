@@ -4,10 +4,7 @@ import com.itlyc.common.vo.Result;
 import com.itlyc.service.CompanyService;
 import com.itlyc.sys.entity.Company;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -33,7 +30,18 @@ public class CompanyController {
      * @return
      */
     @PostMapping("/company/uploadOSS")
-    public Result<String> uploadLogo(@RequestParam("file")MultipartFile file) throws IOException {
+    public Result<String> uploadLogo(MultipartFile file) throws IOException {
         return Result.success("上传成功", companyService.uploadLogo(file));
+    }
+
+    /**
+     * 修改企业信息
+     * @param company 企业对象
+     * @return
+     */
+    @PutMapping("/company/company")
+    public Result updateCompany(@RequestBody Company company){
+        companyService.updateCompany(company);
+        return Result.success();
     }
 }

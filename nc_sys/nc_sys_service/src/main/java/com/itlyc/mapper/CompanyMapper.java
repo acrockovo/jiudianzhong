@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface CompanyMapper {
     // 查询当前登录用户企业
     Company queryCurrentCompany(Long companyId);
+    // 修改企业信息
+    void updateCompany(Company company);
 }
