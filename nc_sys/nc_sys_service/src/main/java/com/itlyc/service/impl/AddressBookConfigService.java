@@ -11,4 +11,6 @@ public interface AddressBookConfigService {
     void saveAddressBook(AddressBookConfig addressBookConfig);
     // 修改通讯录在APP中显示状态
     void updateContactConfig(AddressBookConfig addressBookConfig);
+    // 根据id删除通讯录
+    void deleteContactConfig(Long id);
 }

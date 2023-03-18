@@ -82,4 +82,14 @@ public class AddressBookConfigServiceImpl implements AddressBookConfigService {
             throw new NcException(ResponseEnum.INSERT_OPERATION_FAIL);
         }
     }
+
+    /**
+     * 根据id删除通讯录
+     * @param id 通讯录id
+     */
+    @Override
+    public void deleteContactConfig(Long id) {
+        Long companyId = UserHolder.getCompanyId();
+        addressBookConfigMapper.deleteContactConfig(companyId,id);
+    }
 }

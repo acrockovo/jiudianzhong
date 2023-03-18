@@ -18,4 +18,6 @@ public interface AddressBookConfigMapper {
     boolean save(AddressBookConfig companyContactConfig);
     // 修改通讯录在APP中显示状态
     boolean updateContactConfig(AddressBookConfig addressBookConfig);
+    // 根据通讯录id删除
+    void deleteContactConfig(Long companyId, Long id);
 }

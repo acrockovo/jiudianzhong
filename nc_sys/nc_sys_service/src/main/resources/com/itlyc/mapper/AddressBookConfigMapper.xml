@@ -39,4 +39,8 @@
         </set>
         where id = #{id}
     </update>
+
+    <delete id="deleteContactConfig">
+        delete from sys_address_book_config where id = #{id} and company_id = #{companyId}
+    </delete>
 </mapper>

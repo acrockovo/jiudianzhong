@@ -45,4 +45,15 @@ public class AddressBookConfigController {
         addressBookConfigService.updateContactConfig(addressBookConfig);
         return Result.success();
     }
+    /**
+     * 根据id删除通讯录
+     * @param id 通讯录id
+     * @return
+     */
+    @DeleteMapping("/company/config/contact/{id}")
+    public Result deleteContactConfig(@PathVariable Long id){
+        addressBookConfigService.deleteContactConfig(id);
+        return Result.success();
+    }
+
 }
