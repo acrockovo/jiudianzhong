@@ -13,4 +13,14 @@
             (#{addressConfig.type},#{addressConfig.name},#{addressConfig.status},#{addressConfig.fieldType},#{addressConfig.companyId})
         </foreach>
     </insert>
+
+    <select id="queryAddressBookInfoByIdAndName" resultType="com.itlyc.sys.entity.AddressBookConfig">
+        select * from sys_address_book_config where company_id = #{companyId} and name = #{name}
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_address_book_config
+        (type, name, status, field_type,company_id) values
+        (#{type},#{name},#{status},#{fieldType},#{companyId})
+    </insert>
 </mapper>

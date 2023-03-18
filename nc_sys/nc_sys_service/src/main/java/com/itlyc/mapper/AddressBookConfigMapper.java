@@ -12,4 +12,8 @@ public interface AddressBookConfigMapper {
     List<AddressBookConfig> queryAddressBookInfo(Long companyId);
     // 保存企业通讯录
     void insert(List<AddressBookConfig> addressBookConfigList);
+    // 根据企业id和通讯录名称查询
+    AddressBookConfig queryAddressBookInfoByIdAndName(AddressBookConfig addressBookConfig);
+    // 新增企业通讯录
+    boolean save(AddressBookConfig companyContactConfig);
 }
