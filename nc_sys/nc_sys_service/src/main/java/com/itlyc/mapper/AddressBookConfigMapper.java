@@ -16,4 +16,6 @@ public interface AddressBookConfigMapper {
     AddressBookConfig queryAddressBookInfoByIdAndName(AddressBookConfig addressBookConfig);
     // 新增企业通讯录
     boolean save(AddressBookConfig companyContactConfig);
+    // 修改通讯录在APP中显示状态
+    boolean updateContactConfig(AddressBookConfig addressBookConfig);
 }

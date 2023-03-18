@@ -17,10 +17,26 @@
     <select id="queryAddressBookInfoByIdAndName" resultType="com.itlyc.sys.entity.AddressBookConfig">
         select * from sys_address_book_config where company_id = #{companyId} and name = #{name}
     </select>
-
+    <!--新增企业通讯录-->
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into sys_address_book_config
         (type, name, status, field_type,company_id) values
         (#{type},#{name},#{status},#{fieldType},#{companyId})
     </insert>
+    <!--修改通讯录在APP中显示状态-->
+    <update id="updateContactConfig">
+        update sys_address_book_config
+        <set>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

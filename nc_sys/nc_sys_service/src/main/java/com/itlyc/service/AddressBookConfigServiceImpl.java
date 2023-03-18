@@ -68,4 +68,18 @@ public class AddressBookConfigServiceImpl implements AddressBookConfigService {
             throw new NcException(ResponseEnum.INSERT_OPERATION_FAIL);
         }
     }
+
+    /**
+     * 修改通讯录在APP中显示状态
+     * @param addressBookConfig 请求对象
+     * @return
+     */
+    @Override
+    public void updateContactConfig(AddressBookConfig addressBookConfig) {
+        addressBookConfig.setCompanyId(UserHolder.getCompanyId());
+        boolean b = addressBookConfigMapper.updateContactConfig(addressBookConfig);
+        if(!b){
+            throw new NcException(ResponseEnum.INSERT_OPERATION_FAIL);
+        }
+    }
 }

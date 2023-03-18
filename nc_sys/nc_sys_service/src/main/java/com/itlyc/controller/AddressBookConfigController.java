@@ -4,10 +4,7 @@ import com.itlyc.common.vo.Result;
 import com.itlyc.service.impl.AddressBookConfigService;
 import com.itlyc.sys.entity.AddressBookConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,7 +26,7 @@ public class AddressBookConfigController {
 
     /**
      * 新增企业通讯录
-     * @param addressBookConfig
+     * @param addressBookConfig 请求对象
      * @return
      */
     @PostMapping("/company/config/contact")
@@ -38,4 +35,14 @@ public class AddressBookConfigController {
         return Result.success("保存成功");
     }
 
+    /**
+     * 修改通讯录在APP中显示状态
+     * @param addressBookConfig 请求对象
+     * @return
+     */
+    @PutMapping("/company/config/contact/{id}/{type}")
+    public Result updateContactConfig(@RequestBody AddressBookConfig addressBookConfig){
+        addressBookConfigService.updateContactConfig(addressBookConfig);
+        return Result.success();
+    }
 }
