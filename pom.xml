@@ -13,6 +13,7 @@
         <module>nc_sys</module>
         <module>nc_auth</module>
         <module>nc_aliyun_starter</module>
+        <module>nc_notify</module>
     </modules>
     <packaging>pom</packaging>
 

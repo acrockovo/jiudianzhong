@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class TokenConfig {
 
     //对称加密采用秘钥
-    private static final String secret = "itcast_auth";
+    private static final String secret = "lyc_auth";
 
     @Bean
     public JwtAccessTokenConverter jwtAccessTokenConverter(){
