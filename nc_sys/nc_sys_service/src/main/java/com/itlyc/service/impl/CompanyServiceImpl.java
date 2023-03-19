@@ -8,6 +8,7 @@ import com.itlyc.mapper.CompanyMapper;
 import com.itlyc.service.CompanyService;
 import com.itlyc.sys.entity.Company;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,5 +91,20 @@ public class CompanyServiceImpl implements CompanyService {
         company.setId(companyId);
         log.info("更新企业信息传入mapper对象-{}", company);
         companyMapper.updateCompany(company);
+    }
+
+    /**
+     * 查询企业列表
+     * @param keyword 关键字
+     * @param industryId 行业id
+     * @return
+     */
+    @Override
+    public List<Company> queryCompanyList(String keyword, String industryId) {
+
+        if(StringUtils.isBlank(keyword) && StringUtils.isBlank(industryId)){
+            throw new NcException(ResponseEnum.INVALID_PARAM_ERROR);
+        }
+        return companyMapper.queryCompanyList(keyword,industryId);
     }
 }

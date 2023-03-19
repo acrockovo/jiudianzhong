@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -40,7 +41,8 @@ public class CompanyUserServiceImpl implements CompanyUserService {
     private RoleService roleService;
     @Autowired
     private FunctionService functionService;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     /**
      * 根据手机号查询用户
      * @param userName 手机号
@@ -141,5 +143,28 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         companyUser.setId(companyUserAdminDTO.getUserId());
         int i = companyUserMapper.updateRoleById(companyUser);
         return i;
+    }
+
+    /**
+     * 移动端用户注册
+     * @param companyUser 用户对象
+     * @param checkcode 验证码
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Long register(CompanyUser companyUser, String checkcode) {
+        CompanyUser sysUser = companyUserMapper.findSysUser(companyUser.getMobile());
+        if(sysUser != null){
+            throw new NcException(ResponseEnum.USER_MOBILE_EXISTS);
+        }
+        if(!StringUtils.equals(checkcode,"123456")){
+            throw new NcException(ResponseEnum.INVALID_VERIFY_CODE);
+        }
+        companyUser.setPassword(passwordEncoder.encode(companyUser.getPassword()));
+        List<CompanyUser> companyUserList = new ArrayList<>();
+        companyUserList.add(companyUser);
+        companyUserMapper.saveBatch(companyUserList);
+        return companyUser.getId();
     }
 }

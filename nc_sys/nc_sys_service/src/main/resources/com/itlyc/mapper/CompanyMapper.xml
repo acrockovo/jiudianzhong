@@ -12,4 +12,16 @@
         logo = #{logo}
         where id = #{id}
     </update>
+    <!--查询企业列表-->
+    <select id="queryCompanyList" resultType="com.itlyc.sys.entity.Company">
+        select * from sys_company
+        <where>
+            <if test="keyword != null and keyword != ''">
+                name like concat('%',#{keyword},'%')
+            </if>
+            <if test="industryId != null">
+                and industry_id = #{industryId}
+            </if>
+        </where>
+    </select>
 </mapper>

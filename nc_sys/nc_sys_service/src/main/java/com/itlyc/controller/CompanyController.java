@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 public class CompanyController {
@@ -43,5 +44,17 @@ public class CompanyController {
     public Result updateCompany(@RequestBody Company company){
         companyService.updateCompany(company);
         return Result.success();
+    }
+
+    /**
+     * 根据条件查询企业列表
+     * @param keyword 查询关键字
+     * @return
+     */
+    @GetMapping("/company/list")
+    public Result<List<Company>> queryCompanyList(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "industryId", required = false) String industryId){
+        return Result.success(companyService.queryCompanyList(keyword, industryId));
     }
 }

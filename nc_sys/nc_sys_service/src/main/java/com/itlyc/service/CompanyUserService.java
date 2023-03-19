@@ -16,4 +16,6 @@ public interface CompanyUserService {
     PageResult<CompanyUserDTO> queryCompanyMembersByPage(Integer page, Integer pageSize);
     // 新增子管理员
     int addSubAdmin(CompanyUserAdminDTO companyUserAdminDTO);
+    // 移动端用户注册
+    Long register(CompanyUser companyUser, String checkcode);
 }
