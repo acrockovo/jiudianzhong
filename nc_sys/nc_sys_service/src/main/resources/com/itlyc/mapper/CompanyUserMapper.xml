@@ -23,4 +23,24 @@
         role_desc =#{roleDesc}
         where id = #{id}
     </update>
+    <!--分页获取部门成员列表-->
+    <select id="queryCompanyMembers" resultType="com.itlyc.sys.entity.CompanyUser">
+        select * from sys_company_user where
+        <choose>
+            <when test="departmentId == 0">
+                department_id is null
+            </when>
+            <otherwise>
+                department_id = #{departmentId}
+            </otherwise>
+        </choose>
+        <if test="keyword != null and keyword != ''">
+            and (
+                username like concat("%",#{keyword},"%")
+                or work_number like concat("%",#{keyword},"%")
+                or mobile like concat("%",#{keyword},"%")
+            )
+        </if>
+        and company_id = #{companyId}
+    </select>
 </mapper>

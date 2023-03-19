@@ -16,4 +16,6 @@ public interface CompanyUserMapper {
     Page<CompanyUser> queryCompanyMembersByPage(Long companyId);
     // 更新角色列表
     int updateRoleById(CompanyUser companyUser);
+    // 分页获取部门成员列表
+    Page<CompanyUser> queryCompanyMembers(@Param("companyId") Long companyId, @Param("departmentId") Long departmentId, @Param("keyword") String keyword);
 }

@@ -42,4 +42,21 @@ public class OrganizationController {
     public Result<List<DepartmentDTO>> queryDepartmentByTree(){
         return Result.success("查询部门列表成功", organizationService.queryDepartmentByTree());
     }
+
+    /**
+     * 分页获取部门成员列表
+     * @param page 当前页
+     * @param pageSize 页大小
+     * @param departmentId 部门ID
+     * @param keyword 查询关键字
+     * @throws Exception
+     */
+    @GetMapping(value = "/organization/members")
+    public Result<PageResult<CompanyUserDTO>> queryCompanyMembers(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "20") Integer pageSize,
+            @RequestParam(value = "departmentId", required = false) Long departmentId,
+            @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
+        return Result.success(organizationService.queryCompanyMembers(page, pageSize, departmentId, keyword));
+    }
 }
