@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itlyc.mapper.OrganizationMapper">
+    <!--查询当前企业下部门列表-->
+    <select id="queryDepartmentByTree" resultType="com.itlyc.sys.dto.DepartmentDTO">
+        select * from sys_department where company_id = #{companyId} and parent_id = #{parentId}
+    </select>
+    <!--根据parentId查询子部门信息-->
+    <select id="queryDepartmentByTreeByParentId" resultType="com.itlyc.sys.dto.DepartmentDTO">
+        select * from sys_department where company_id = #{companyId} and parent_id = #{id}
+    </select>
+</mapper>

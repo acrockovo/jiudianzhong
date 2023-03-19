@@ -1,4 +1,4 @@
-package com.itlyc.service.impl;
+package com.itlyc.service;
 
 import com.itlyc.sys.entity.AddressBookConfig;
 

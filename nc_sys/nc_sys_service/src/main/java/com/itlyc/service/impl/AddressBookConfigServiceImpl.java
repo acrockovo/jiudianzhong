@@ -1,10 +1,10 @@
-package com.itlyc.service;
+package com.itlyc.service.impl;
 
 import com.itlyc.common.exception.advice.NcException;
 import com.itlyc.common.exception.enums.ResponseEnum;
 import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.mapper.AddressBookConfigMapper;
-import com.itlyc.service.impl.AddressBookConfigService;
+import com.itlyc.service.AddressBookConfigService;
 import com.itlyc.sys.entity.AddressBookConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

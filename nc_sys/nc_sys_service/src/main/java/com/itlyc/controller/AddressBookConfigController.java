@@ -1,7 +1,7 @@
 package com.itlyc.controller;
 
 import com.itlyc.common.vo.Result;
-import com.itlyc.service.impl.AddressBookConfigService;
+import com.itlyc.service.AddressBookConfigService;
 import com.itlyc.sys.entity.AddressBookConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
