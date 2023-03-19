@@ -3,6 +3,7 @@ package com.itlyc.service;
 import com.itlyc.common.vo.PageResult;
 import com.itlyc.sys.dto.CompanyUserAdminDTO;
 import com.itlyc.sys.dto.CompanyUserDTO;
+import com.itlyc.sys.entity.CompanyUser;
 
 import java.util.List;
 

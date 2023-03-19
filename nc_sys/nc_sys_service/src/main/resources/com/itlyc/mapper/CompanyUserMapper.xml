@@ -43,4 +43,12 @@
         </if>
         and company_id = #{companyId}
     </select>
+    <insert id="saveBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sys_company_user
+        (company_id, company_name, post, mobile, work_number, remark, email, office_address, username, create_time, enable) values
+        <foreach collection="list" item="companyUser" separator=",">
+            (#{companyUser.companyId},#{companyUser.companyName},#{companyUser.post},#{companyUser.mobile},#{companyUser.workNumber},
+            #{companyUser.remark},#{companyUser.email},#{companyUser.officeAddress},#{companyUser.username},#{companyUser.createTime},#{companyUser.enable})
+        </foreach>
+    </insert>
 </mapper>

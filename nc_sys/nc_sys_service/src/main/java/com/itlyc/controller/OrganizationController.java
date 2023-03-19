@@ -6,11 +6,12 @@ import com.itlyc.service.CompanyUserService;
 import com.itlyc.service.OrganizationService;
 import com.itlyc.sys.dto.CompanyUserDTO;
 import com.itlyc.sys.dto.DepartmentDTO;
+import com.itlyc.sys.dto.MemberExcelRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -58,5 +59,25 @@ public class OrganizationController {
             @RequestParam(value = "departmentId", required = false) Long departmentId,
             @RequestParam(value = "keyword", required = false) String keyword) throws Exception {
         return Result.success(organizationService.queryCompanyMembers(page, pageSize, departmentId, keyword));
+    }
+
+    /**
+     * PC:通讯录Json导入导入
+     */
+    @PostMapping(value = "/organization/members/list")
+    public Result uploadExcel(@RequestBody MemberExcelRequest memberExcelChineseDTOs) throws Exception {
+        organizationService.excelImport(memberExcelChineseDTOs);
+        return Result.success();
+    }
+
+    /**
+     * 在服务器端接收上传excel文件 解析excel文件中内容，批量导入员工记录
+     * @param file
+     * @return
+     */
+    @PostMapping("/organization/members/uploadXls")
+    public Result uploadExcel(@RequestParam("file") MultipartFile file) throws IOException {
+        organizationService.uploadExcel(file);
+        return Result.success();
     }
 }

@@ -18,4 +18,6 @@ public interface CompanyUserMapper {
     int updateRoleById(CompanyUser companyUser);
     // 分页获取部门成员列表
     Page<CompanyUser> queryCompanyMembers(@Param("companyId") Long companyId, @Param("departmentId") Long departmentId, @Param("keyword") String keyword);
+    // 批量插入用户
+    void saveBatch(List<CompanyUser> companyUsers);
 }
