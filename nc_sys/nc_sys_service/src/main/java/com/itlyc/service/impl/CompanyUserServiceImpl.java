@@ -13,10 +13,13 @@ import com.itlyc.service.FunctionService;
 import com.itlyc.service.RoleService;
 import com.itlyc.sys.dto.CompanyUserAdminDTO;
 import com.itlyc.sys.dto.CompanyUserDTO;
+import com.itlyc.sys.dto.UserJoinCompanyDTO;
 import com.itlyc.sys.entity.CompanyUser;
 import com.itlyc.sys.entity.Function;
 import com.itlyc.sys.entity.Role;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class CompanyUserServiceImpl implements CompanyUserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CompanyUserServiceImpl.class);
 
     @Resource
     private CompanyUserMapper companyUserMapper;
@@ -166,5 +171,15 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         companyUserList.add(companyUser);
         companyUserMapper.saveBatch(companyUserList);
         return companyUser.getId();
+    }
+
+    /**
+     * 给管理员推送消息，申请加入企业
+     * @param userJoinCompanyDTO
+     * @return
+     */
+    @Override
+    public void applyJoinCompany(UserJoinCompanyDTO userJoinCompanyDTO) {
+
     }
 }

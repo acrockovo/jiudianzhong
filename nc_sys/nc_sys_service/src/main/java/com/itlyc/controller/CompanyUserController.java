@@ -4,6 +4,7 @@ import com.itlyc.common.vo.Result;
 import com.itlyc.service.CompanyUserService;
 import com.itlyc.sys.dto.CompanyUserAdminDTO;
 import com.itlyc.sys.dto.CompanyUserDTO;
+import com.itlyc.sys.dto.UserJoinCompanyDTO;
 import com.itlyc.sys.entity.CompanyUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -57,5 +58,16 @@ public class CompanyUserController {
     @PostMapping("/user/register")
     public Result<Long> register(CompanyUser companyUser, @RequestParam("checkcode") String checkcode) throws Exception {
         return Result.success(companyUserService.register(companyUser, checkcode));
+    }
+
+    /**
+     * 给管理员推送消息，申请加入企业
+     * @param userJoinCompanyDTO
+     * @return
+     */
+    @PostMapping("/company/applyJoinCompany")
+    public Result applyJoinCompany(@RequestBody UserJoinCompanyDTO userJoinCompanyDTO){
+        companyUserService.applyJoinCompany(userJoinCompanyDTO);
+        return Result.successMessage("申请已提交，请等待审核结果！");
     }
 }

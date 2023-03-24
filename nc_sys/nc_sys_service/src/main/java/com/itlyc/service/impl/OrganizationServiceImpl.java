@@ -23,6 +23,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,8 @@ import static org.apache.poi.ss.usermodel.Cell.*;
 
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(CompanyUserServiceImpl.class);
 
     @Resource
     private OrganizationMapper organizationMapper;
@@ -98,6 +102,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         Page<CompanyUser> page = companyUserMapper.queryCompanyMembers(companyId, departmentId, keyword);
         if(!CollectionUtils.isEmpty(page.getResult())){
             List<CompanyUserDTO> companyUserDTOList = BeanHelper.copyWithCollection(page.getResult(), CompanyUserDTO.class);
+            logger.info("分页获取部门成员列表+{}",companyUserDTOList);
             return new PageResult<>(page.getTotal(), (long)page.getPages(), companyUserDTOList);
         }
         return null;
@@ -150,6 +155,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 companyUsers.add(companyUser);
             }
             if(!CollectionUtils.isEmpty(companyUsers)){
+                logger.info("保存成功{}",companyUsers);
                 companyUserMapper.saveBatch(companyUsers);
             }
         } else {

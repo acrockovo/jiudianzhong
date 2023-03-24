@@ -3,6 +3,7 @@ package com.itlyc.service;
 import com.itlyc.common.vo.PageResult;
 import com.itlyc.sys.dto.CompanyUserAdminDTO;
 import com.itlyc.sys.dto.CompanyUserDTO;
+import com.itlyc.sys.dto.UserJoinCompanyDTO;
 import com.itlyc.sys.entity.CompanyUser;
 
 import java.util.List;
@@ -18,4 +19,6 @@ public interface CompanyUserService {
     int addSubAdmin(CompanyUserAdminDTO companyUserAdminDTO);
     // 移动端用户注册
     Long register(CompanyUser companyUser, String checkcode);
+    // 给管理员推送消息，申请加入企业
+    void applyJoinCompany(UserJoinCompanyDTO userJoinCompanyDTO);
 }
