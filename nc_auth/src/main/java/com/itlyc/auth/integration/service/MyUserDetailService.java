@@ -72,10 +72,10 @@ public class MyUserDetailService implements UserDetailsService {
         List<SimpleGrantedAuthority> functionAuthorityList = null;
         // 角色
         if(!CollectionUtils.isEmpty(companyUserDTO.getSysRoles())){
-            roleAuthorityList = companyUserDTO.getSysRoles().stream().map(role -> {
-            String roleName = role.getRoleName();
-            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleName);
-            return simpleGrantedAuthority;
+                roleAuthorityList = companyUserDTO.getSysRoles().stream().map(role -> {
+                String roleName = role.getRoleName();
+                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleName);
+                return simpleGrantedAuthority;
             }).collect(Collectors.toList());
         }
         // 权限
