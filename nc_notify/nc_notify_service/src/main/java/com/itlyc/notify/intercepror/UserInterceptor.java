@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 执行时机，Security校验解析JWT令牌过滤器之后执行
  * 从Security上下文中获取用户主体信息
- * @author: itheima
+ * @author: itlyc
  * @create: 2021-05-27 11:47
  */
 @Component

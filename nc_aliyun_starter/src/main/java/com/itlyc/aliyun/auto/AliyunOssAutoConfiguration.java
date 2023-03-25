@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Import;
 /**
  * 自动配置类
  *
- * @author itheima
+ * @author itlyc
  */
 @Configuration
 @Import(OssConfig.class)
