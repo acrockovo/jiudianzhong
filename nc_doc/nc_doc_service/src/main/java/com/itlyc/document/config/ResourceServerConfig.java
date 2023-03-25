@@ -1,6 +1,6 @@
-package com.itlyc.doc.config;
+package com.itlyc.document.config;
 
-import com.itlyc.doc.properties.PermitUrlProperties;
+import com.itlyc.document.properties.PermitUrlProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

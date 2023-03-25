@@ -1,7 +1,7 @@
-package com.itlyc.doc.dto;
+package com.itlyc.document.dto;
 
-import com.itlyc.doc.entity.File;
-import com.itlyc.doc.entity.Folder;
+import com.itlyc.document.entity.File;
+import com.itlyc.document.entity.Folder;
 import lombok.Data;
 
 import java.io.Serializable;

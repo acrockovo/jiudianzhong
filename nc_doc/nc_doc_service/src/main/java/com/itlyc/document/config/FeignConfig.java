@@ -1,4 +1,4 @@
-package com.itlyc.doc.config;
+package com.itlyc.document.config;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

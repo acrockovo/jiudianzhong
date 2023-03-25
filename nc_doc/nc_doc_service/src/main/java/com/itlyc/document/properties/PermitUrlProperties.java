@@ -1,4 +1,4 @@
-package com.itlyc.doc.properties;
+package com.itlyc.document.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

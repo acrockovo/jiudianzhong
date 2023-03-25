@@ -1,6 +1,6 @@
-package com.itlyc.doc.config;
+package com.itlyc.document.config;
 
-import com.itlyc.doc.interceptor.UserInterceptor;
+import com.itlyc.document.interceptor.UserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

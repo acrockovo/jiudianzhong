@@ -1,4 +1,4 @@
-package com.itlyc.doc.interceptor;
+package com.itlyc.document.interceptor;
 
 import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.common.util.JsonUtils;

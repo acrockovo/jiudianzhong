@@ -1,4 +1,4 @@
-package com.itlyc.doc.config;
+package com.itlyc.document.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 public class TokenConfig {
 
-    private String SIGNING_KEY = "itlyc_auth";
+    private String SIGNING_KEY = "lyc_auth";
 
     /**
      * 配置令牌存储

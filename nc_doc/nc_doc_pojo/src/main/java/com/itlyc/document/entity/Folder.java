@@ -1,4 +1,4 @@
-package com.itlyc.doc.entity;
+package com.itlyc.document.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
