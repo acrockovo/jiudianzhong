@@ -68,19 +68,24 @@ public class MyUserDetailService implements UserDetailsService {
      * @return
      */
     private List<SimpleGrantedAuthority> getCompanyUserAuthority(CompanyUserDTO companyUserDTO) {
+        List<SimpleGrantedAuthority> roleAuthorityList = null;
+        List<SimpleGrantedAuthority> functionAuthorityList = null;
         // 角色
-        List<SimpleGrantedAuthority> roleAuthorityList = companyUserDTO.getSysRoles().stream().map(role -> {
+        if(!CollectionUtils.isEmpty(companyUserDTO.getSysRoles())){
+            roleAuthorityList = companyUserDTO.getSysRoles().stream().map(role -> {
             String roleName = role.getRoleName();
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleName);
             return simpleGrantedAuthority;
         }).collect(Collectors.toList());
+        }
         // 权限
-        List<SimpleGrantedAuthority> functionAuthorityList = companyUserDTO.getSysFunctions().stream().map(function -> {
-            String functionName = function.getName();
-            SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(functionName);
-            return simpleGrantedAuthority;
-        }).collect(Collectors.toList());
-
+        if(!CollectionUtils.isEmpty(companyUserDTO.getSysFunctions())) {
+                functionAuthorityList = companyUserDTO.getSysFunctions().stream().map(function -> {
+                String functionName = function.getName();
+                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(functionName);
+                return simpleGrantedAuthority;
+            }).collect(Collectors.toList());
+        }
         if(!CollectionUtils.isEmpty(roleAuthorityList)){
             roleAuthorityList.addAll(functionAuthorityList);
         }
