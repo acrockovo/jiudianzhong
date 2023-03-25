@@ -28,4 +28,13 @@ public class DocumentController {
         return Result.success();
     }
 
+    /**
+     * 添加文件
+     * 移动端
+     */
+    @PostMapping(value = "/document/insertFile")
+    public Result saveFile(@RequestBody File File){
+        documentService.saveFile(File);
+        return Result.success();
+    }
 }
