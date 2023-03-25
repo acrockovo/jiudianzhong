@@ -76,7 +76,7 @@ public class MyUserDetailService implements UserDetailsService {
             String roleName = role.getRoleName();
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleName);
             return simpleGrantedAuthority;
-        }).collect(Collectors.toList());
+            }).collect(Collectors.toList());
         }
         // 权限
         if(!CollectionUtils.isEmpty(companyUserDTO.getSysFunctions())) {
