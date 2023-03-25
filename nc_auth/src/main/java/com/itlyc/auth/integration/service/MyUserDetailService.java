@@ -74,16 +74,14 @@ public class MyUserDetailService implements UserDetailsService {
         if(!CollectionUtils.isEmpty(companyUserDTO.getSysRoles())){
                 roleAuthorityList = companyUserDTO.getSysRoles().stream().map(role -> {
                 String roleName = role.getRoleName();
-                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(roleName);
-                return simpleGrantedAuthority;
+                return new SimpleGrantedAuthority(roleName);
             }).collect(Collectors.toList());
         }
         // 权限
         if(!CollectionUtils.isEmpty(companyUserDTO.getSysFunctions())) {
                 functionAuthorityList = companyUserDTO.getSysFunctions().stream().map(function -> {
                 String functionName = function.getName();
-                SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(functionName);
-                return simpleGrantedAuthority;
+                return new SimpleGrantedAuthority(functionName);
             }).collect(Collectors.toList());
         }
         if(!CollectionUtils.isEmpty(roleAuthorityList)){

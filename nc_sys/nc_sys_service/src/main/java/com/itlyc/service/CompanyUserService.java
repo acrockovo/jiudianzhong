@@ -21,4 +21,6 @@ public interface CompanyUserService {
     Long register(CompanyUser companyUser, String checkcode);
     // 给管理员推送消息，申请加入企业
     void applyJoinCompany(UserJoinCompanyDTO userJoinCompanyDTO);
+    // 是否同意加入企业
+    void allowedJonCompany(Long applyUserId, Boolean approved, String remark, String notifyMsgId);
 }

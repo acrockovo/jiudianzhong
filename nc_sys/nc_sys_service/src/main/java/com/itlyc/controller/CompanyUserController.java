@@ -1,5 +1,7 @@
 package com.itlyc.controller;
 
+import com.itlyc.common.exception.advice.NcException;
+import com.itlyc.common.exception.enums.ResponseEnum;
 import com.itlyc.common.vo.Result;
 import com.itlyc.service.CompanyUserService;
 import com.itlyc.sys.dto.CompanyUserAdminDTO;
@@ -69,5 +71,18 @@ public class CompanyUserController {
     public Result applyJoinCompany(@RequestBody UserJoinCompanyDTO userJoinCompanyDTO){
         companyUserService.applyJoinCompany(userJoinCompanyDTO);
         return Result.successMessage("申请已提交，请等待审核结果！");
+    }
+
+    /**
+     * 是否同意加入企业
+     * @param applyUserId 申请加入企业用户ID
+     * @param approved 是否同意   同意：true    拒绝：false
+     * @param notifyMsgId 推送记录ID
+     * @return
+     */
+    @PostMapping("/company/allowedJoinCompany")
+    public Result allowedJonCompany(@RequestParam("applyUserId") Long applyUserId, @RequestParam("approved") Boolean approved, @RequestParam(value = "remark", required = false) String remark, @RequestParam("notifyMsgId") String notifyMsgId){
+        companyUserService.allowedJonCompany(applyUserId, approved, remark, notifyMsgId);
+        return Result.success();
     }
 }

@@ -9,6 +9,7 @@ import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.common.util.BeanHelper;
 import com.itlyc.common.vo.PageResult;
 import com.itlyc.mapper.CompanyUserMapper;
+import com.itlyc.notify.clent.NotifyMsgClient;
 import com.itlyc.notify.dto.NotifyMessage;
 import com.itlyc.service.CompanyService;
 import com.itlyc.service.CompanyUserService;
@@ -57,6 +58,8 @@ public class CompanyUserServiceImpl implements CompanyUserService {
     private CompanyService companyService;
     @Resource
     private RocketMQTemplate rocketMQTemplate;
+    @Autowired
+    private NotifyMsgClient notifyMsgClient;
     /**
      * 根据手机号查询用户
      * @param userName 手机号
@@ -243,5 +246,26 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         String roleNameLike = "ROLE_ADMIN_%";
         List<CompanyUserDTO> companyUserDTOList = companyUserMapper.queryCompanyAdmins(roleNameLike, companyId);
         return companyUserDTOList.get(0);
+    }
+
+    /**
+     * 是否同意加入企业
+     * @param applyUserId 申请用户ID
+     * @param approved 审核状态
+     * @param notifyMsgId 推送记录ID
+     * @return
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void allowedJonCompany(Long applyUserId, Boolean approved, String remark, String notifyMsgId) {
+        //1.更新用户（申请者用户）认证状态
+        CompanyUser companyUser = new CompanyUser();
+        companyUser.setId(applyUserId);
+        companyUser.setEnable(approved);
+        companyUserMapper.updateCompanyUserById(companyUser);
+
+        //2.远程调用推送微服务 更新 推送记录状态
+        String status = approved ? "1" : "2";
+        notifyMsgClient.updateNotifyMsgStatus(notifyMsgId, status);
     }
 }
