@@ -20,4 +20,6 @@ public interface CompanyUserMapper {
     Page<CompanyUser> queryCompanyMembers(@Param("companyId") Long companyId, @Param("departmentId") Long departmentId, @Param("keyword") String keyword);
     // 批量插入用户
     void saveBatch(List<CompanyUser> companyUsers);
+    // 员工申请加入企业时更新员工信息
+    void updateCompanyUserById(CompanyUser companyUser);
 }

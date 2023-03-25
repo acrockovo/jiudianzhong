@@ -51,4 +51,23 @@
             #{companyUser.remark},#{companyUser.email},#{companyUser.officeAddress},#{companyUser.username},#{companyUser.createTime},#{companyUser.enable})
         </foreach>
     </insert>
+
+    <update id="updateCompanyUserById">
+        update sys_company_user
+        <set>
+            <if test="username != null and username != ''">
+                username = #{username},
+            </if>
+            <if test="enable != null">
+                enable = #{enable},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId},
+            </if>
+            <if test="companyName != null and companyName != ''">
+                company_name = #{companyName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>

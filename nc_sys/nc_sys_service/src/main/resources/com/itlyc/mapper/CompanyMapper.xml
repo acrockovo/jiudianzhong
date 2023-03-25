@@ -24,4 +24,8 @@
             </if>
         </where>
     </select>
+
+    <select id="findCompanyByCompanyId" resultType="com.itlyc.sys.entity.Company">
+        select id,name from sys_company where id = #{companyId}
+    </select>
 </mapper>

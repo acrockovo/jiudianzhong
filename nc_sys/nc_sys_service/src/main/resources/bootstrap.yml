@@ -30,6 +30,9 @@ spring:
           - refresh: true
             data-id: sys-oss.yaml
             group: NC_GROUP
+          - refresh: true
+            data-id: sys-rocketmq.yaml
+            group: NC_GROUP
 
 
 

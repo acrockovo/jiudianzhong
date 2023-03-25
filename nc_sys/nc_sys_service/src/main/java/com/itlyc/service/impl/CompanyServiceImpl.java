@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -105,6 +106,20 @@ public class CompanyServiceImpl implements CompanyService {
         if(StringUtils.isBlank(keyword) && StringUtils.isBlank(industryId)){
             throw new NcException(ResponseEnum.INVALID_PARAM_ERROR);
         }
-        return companyMapper.queryCompanyList(keyword,industryId);
+        List<Company> companyList = companyMapper.queryCompanyList(keyword, industryId);
+        if(CollectionUtils.isEmpty(companyList)){
+            throw new NcException(ResponseEnum.COMPANY_NOT_FOUND);
+        }
+        return companyList;
+    }
+
+    /**
+     * 根据id查询当前企业
+     * @param companyId 企业id
+     * @return
+     */
+    @Override
+    public Company findCompanyByCompanyId(Long companyId) {
+        return companyMapper.queryCurrentCompany(companyId);
     }
 }
