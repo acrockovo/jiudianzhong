@@ -14,4 +14,6 @@ public interface FileMapper {
                                  @Param("userId") Long userId, @Param("keyword") String keyword);
     // 根据文档id查询文档
     File queryFileByFileId(Long fileId);
+    // 更新文档
+    boolean updateFile(File file);
 }

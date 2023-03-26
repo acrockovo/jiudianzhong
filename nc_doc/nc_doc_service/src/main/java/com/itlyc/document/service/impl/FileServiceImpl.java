@@ -56,4 +56,17 @@ public class FileServiceImpl implements FileService {
     public File queryFileByFileId(Long fileId) {
         return fileMapper.queryFileByFileId(fileId);
     }
+
+    /**
+     * 更新文档
+     * @param file 文档对象
+     * @return
+     */
+    @Override
+    public void updateFile(File file) {
+        boolean b = fileMapper.updateFile(file);
+        if(!b){
+            throw new NcException(ResponseEnum.UPDATE_OPERATION_FAIL);
+        }
+    }
 }

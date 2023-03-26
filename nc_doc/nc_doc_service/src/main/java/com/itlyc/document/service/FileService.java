@@ -12,4 +12,6 @@ public interface FileService {
     List<File> queryCompanyFiles(Long companyId, Long all_read, Long all_read_write, Long parentFolderId, Long userId, String keyword);
     // 根据文档id查询文档
     File queryFileByFileId(Long fileId);
+    // 更新文档
+    void updateFile(File file);
 }

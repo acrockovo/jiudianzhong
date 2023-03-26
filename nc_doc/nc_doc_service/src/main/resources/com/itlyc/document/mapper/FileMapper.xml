@@ -33,4 +33,12 @@
     <select id="queryFileByFileId" resultType="com.itlyc.document.entity.File">
         select * from doc_file where id = #{fileId}
     </select>
+    <update id="updateFile">
+        update doc_file set
+        content = #{content},
+        name = #{name},
+        folder_id = #{folderId},
+        file_path = #{filePath}
+        where id = #{id}
+    </update>
 </mapper>

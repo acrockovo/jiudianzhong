@@ -163,11 +163,13 @@ public class DocumentServiceImpl implements DocumentService {
      */
     @Override
     public List<UserCollaborationDTO> pagingCollaborationUsers(Long fileId) {
+        logger.info("新增协助作者时查询企业员工列表,{}", fileId);
         // 查询该企业下所有员工信息
         List<CompanyUserDTO> companyUserDTOList = sysClient.queryAllCompanyUser().getData();
         // 查询当前文档信息
         File file = fileService.queryFileByFileId(fileId);
         List<Collaborations> collaborations = documentMapper.queryCollaborationsByFileId(fileId);
+        logger.info("协作者列表,{}", collaborations);
         List<UserCollaborationDTO> userCollaborationDTOS = BeanHelper.copyWithCollection(companyUserDTOList, UserCollaborationDTO.class);
         if(!CollectionUtils.isEmpty(userCollaborationDTOS)){
             // 循环所有员工

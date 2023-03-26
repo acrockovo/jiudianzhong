@@ -128,4 +128,15 @@ public class DocumentController {
         documentService.deleteCollaboration(collaborationsDTO);
         return Result.success();
     }
+
+    /**
+     * 更新文档
+     * @param file 文档对象
+     * @return
+     */
+    @PostMapping("/document/updateFile")
+    public Result updateFile(@RequestBody File file){
+        fileService.updateFile(file);
+        return Result.success();
+    }
 }
