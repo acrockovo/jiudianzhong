@@ -153,6 +153,11 @@ public class DocumentServiceImpl implements DocumentService {
         return null;
     }
 
+    /**
+     * 新增协助作者时查询企业员工列表
+     * @param fileId 文档id
+     * @return
+     */
     @Override
     public List<UserCollaborationDTO> pagingCollaborationUsers(Long fileId) {
         // 查询该企业下所有员工信息
