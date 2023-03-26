@@ -8,4 +8,25 @@
         (company_user_id, file_size, update_user_id, status, name, file_path, content, company_id, folder_id) values
         (#{companyUserId}, #{fileSize}, #{updateUserId}, #{status}, #{name}, #{filePath}, #{content}, #{companyId}, #{folderId})
     </insert>
+    <!--当前企业中 当前文件夹下 公共读 公共读写  作者 协作者 文档  状态为审核通过-->
+    <select id="queryCompanyFiles" resultType="com.itlyc.document.entity.File">
+        select * from doc_file f left join doc_collaborations c on f.id = c.file_id
+        <where>
+            <if test="companyId != null">
+                f.company_id = #{companyId}
+            </if>
+            <if test="userId != null">
+                and f.company_user_id = #{userId}
+            </if>
+            <if test="all_read != null or all_read_write != null">
+                and f.authority in (#{all_read}, #{all_read_write})
+            </if>
+            <if test="parentFolderId != null">
+                and f.folder_id in (select id from doc_folder where parent_id = #{parentFolderId})
+            </if>
+            <if test="userId != null">
+                or c.company_user_id = #{userId}
+            </if>
+        </where>
+    </select>
 </mapper>

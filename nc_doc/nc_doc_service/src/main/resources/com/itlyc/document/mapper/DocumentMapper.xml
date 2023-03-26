@@ -8,4 +8,7 @@
         (company_id, parent_id, name, `order`, company_user_id) values
         (#{companyId}, #{parentId}, #{name}, #{order}, #{companyUserId})
     </insert>
+    <select id="queryCompanyFolder" resultType="com.itlyc.document.entity.Folder">
+        select * from doc_folder where parent_id = #{parentFolderIdId} and company_id = #{companyId} and status = 1
+    </select>
 </mapper>
