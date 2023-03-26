@@ -14,4 +14,12 @@
     <select id="queryCollaborationsByFileId" resultType="com.itlyc.document.entity.Collaborations">
         select * from doc_collaborations where file_id = #{fileId}
     </select>
+    <insert id="saveCollaboration" keyProperty="id" useGeneratedKeys="true">
+        insert into doc_collaborations
+        (file_id, company_user_id) values
+        (#{fileId}, #{companyUserId})
+    </insert>
+    <delete id="deleteCollaboration">
+        delete from doc_collaborations where file_id = #{fileId} and company_user_id = #{userId}
+    </delete>
 </mapper>

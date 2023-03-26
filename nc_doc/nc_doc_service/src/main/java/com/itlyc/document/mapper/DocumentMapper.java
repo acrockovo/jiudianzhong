@@ -13,4 +13,8 @@ public interface DocumentMapper {
     List<Folder> queryCompanyFolder(@Param("parentFolderIdId") Long parentFolderId, @Param("companyId") Long companyId);
     // 查询协作者
     List<Collaborations> queryCollaborationsByFileId(Long fileId);
+    // 新增协作者
+    boolean saveCollaboration(Collaborations collaborations);
+    // 删除协作者
+    boolean deleteCollaboration(@Param("userId") Long userId, @Param("fileId") Long fileId);
 }

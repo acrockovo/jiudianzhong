@@ -2,6 +2,7 @@ package com.itlyc.document;
 
 import com.itlyc.common.vo.PageResult;
 import com.itlyc.common.vo.Result;
+import com.itlyc.document.dto.CollaborationsDTO;
 import com.itlyc.document.dto.DocumentDTO;
 import com.itlyc.document.dto.UserCollaborationDTO;
 import com.itlyc.document.entity.File;
@@ -106,5 +107,25 @@ public class DocumentController {
     @GetMapping(value = "/document/pagingUsers")
     public Result<List<UserCollaborationDTO>> pagingCollaborationUsers(@RequestParam("id") Long fileId) throws Exception {
         return Result.success(documentService.pagingCollaborationUsers(fileId));
+    }
+
+    /**
+     * 添加协作者
+     * 移动端
+     */
+    @PostMapping(value = "/document/insertCollaboration")
+    public Result insertCollaboration(@RequestBody CollaborationsDTO collaborationsDTO) throws Exception {
+        documentService.insertCollaboration(collaborationsDTO);
+        return Result.success();
+    }
+
+    /**
+     * 删除协作者
+     * 移动端
+     */
+    @PostMapping(value = "/document/deleteCollaboration")
+    public Result deleteCollaboration(@RequestBody CollaborationsDTO collaborationsDTO) throws Exception {
+        documentService.deleteCollaboration(collaborationsDTO);
+        return Result.success();
     }
 }

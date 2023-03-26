@@ -1,10 +1,13 @@
 package com.itlyc.document.service.impl;
 
 import com.github.pagehelper.PageHelper;
+import com.itlyc.common.exception.advice.NcException;
+import com.itlyc.common.exception.enums.ResponseEnum;
 import com.itlyc.common.threadLocals.UserHolder;
 import com.itlyc.common.util.BeanHelper;
 import com.itlyc.common.util.CountUtil;
 import com.itlyc.common.vo.PageResult;
+import com.itlyc.document.dto.CollaborationsDTO;
 import com.itlyc.document.dto.DocumentDTO;
 import com.itlyc.document.dto.UserCollaborationDTO;
 import com.itlyc.document.entity.Collaborations;
@@ -164,29 +167,78 @@ public class DocumentServiceImpl implements DocumentService {
         List<CompanyUserDTO> companyUserDTOList = sysClient.queryAllCompanyUser().getData();
         // 查询当前文档信息
         File file = fileService.queryFileByFileId(fileId);
-        // 查询当前文档id下所有协作者信息
         List<Collaborations> collaborations = documentMapper.queryCollaborationsByFileId(fileId);
-        if(!CollectionUtils.isEmpty(collaborations)){
-            // 拿到协作者id列表
-            List<Long> userIds = collaborations.stream().map(Collaborations::getCompanyUserId).collect(Collectors.toList());
-            List<UserCollaborationDTO> userCollaborationDTOS = BeanHelper.copyWithCollection(companyUserDTOList, UserCollaborationDTO.class);
-            if(!CollectionUtils.isEmpty(userCollaborationDTOS)){
-                // 循环所有员工
-                for (UserCollaborationDTO userCollaborationDTO : userCollaborationDTOS) {
-                    // 声明协作者标识 0既不是拥有者也不是协作者 1是拥有者 2是协作者
-                    Integer status = 0;
-                    // 判断是否是作者
-                    boolean equals = file.getCompanyUserId().equals(userCollaborationDTO.getId());
-                    status = equals ? DocumentEnum.USER_TYPE_AUTHOR.getVal() : DocumentEnum.USER_TYPE_NONE.getVal();
-                    // 判断是否是协作者
+        List<UserCollaborationDTO> userCollaborationDTOS = BeanHelper.copyWithCollection(companyUserDTOList, UserCollaborationDTO.class);
+        if(!CollectionUtils.isEmpty(userCollaborationDTOS)){
+            // 循环所有员工
+            for (UserCollaborationDTO userCollaborationDTO : userCollaborationDTOS) {
+                // 声明协作者标识 0既不是拥有者也不是协作者 1是拥有者 2是协作者
+                Integer status = 0;
+                // 判断是否是作者
+                boolean equals = file.getCompanyUserId().equals(userCollaborationDTO.getId());
+                status = equals ? DocumentEnum.USER_TYPE_AUTHOR.getVal() : DocumentEnum.USER_TYPE_NONE.getVal();
+                // 判断是否有协作者
+                if(!CollectionUtils.isEmpty(collaborations)){
+                    // 拿到协作者id列表
+                    List<Long> userIds = collaborations.stream().map(Collaborations::getCompanyUserId).collect(Collectors.toList());
                     if(userIds.contains(userCollaborationDTO.getId())){
                         status = DocumentEnum.USER_TYPE_COLLABORATION.getVal();
                     }
-                    userCollaborationDTO.setState(status);
                 }
+                userCollaborationDTO.setState(status);
             }
             return userCollaborationDTOS;
         }
         return null;
+    }
+
+    /**
+     * 新增协作者
+     * @param collaborationsDTO
+     */
+    @Override
+    public void insertCollaboration(CollaborationsDTO collaborationsDTO) {
+        this.validDoc(collaborationsDTO);
+        //新增文档协作者记录
+        Collaborations collaborations = BeanHelper.copyProperties(collaborationsDTO, Collaborations.class);
+        //TODO 前端提交员工id参数名称 userId
+        collaborations.setCompanyUserId(collaborationsDTO.getUserId());
+        boolean b = documentMapper.saveCollaboration(collaborations);
+        if(!b){
+            throw new NcException(ResponseEnum.INSERT_OPERATION_FAIL);
+        }
+    }
+
+    /**
+     * 判断文档是否有权限操作-是否为作者
+     * @param collaborationsDTO
+     */
+    private void validDoc(CollaborationsDTO collaborationsDTO) {
+        File file = fileService.queryFileByFileId(collaborationsDTO.getFileId());
+        if(file == null){
+            throw new NcException(ResponseEnum.DOC_NOT_FOUND);
+        }
+        //1.2判断文档状态
+        if(!file.getEnable()){
+            throw new NcException(ResponseEnum.DOC_NOT_FOUND);
+        }
+        //1.2 判断文档拥有者
+        Long companyUserId = UserHolder.getUserId();
+        if(!file.getCompanyUserId().equals(companyUserId)){
+            throw new NcException(ResponseEnum.DOC_NOT_ALLOWED);
+        }
+    }
+
+    /**
+     * 删除协作者
+     * @param collaborationsDTO
+     */
+    @Override
+    public void deleteCollaboration(CollaborationsDTO collaborationsDTO) {
+        this.validDoc(collaborationsDTO);
+        boolean b = documentMapper.deleteCollaboration(collaborationsDTO.getUserId(),collaborationsDTO.getFileId());
+        if(!b){
+            throw new NcException(ResponseEnum.DELETE_OPERATION_FAIL);
+        }
     }
 }
