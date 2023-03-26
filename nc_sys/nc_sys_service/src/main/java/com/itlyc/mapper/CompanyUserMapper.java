@@ -22,4 +22,8 @@ public interface CompanyUserMapper {
     void saveBatch(List<CompanyUser> companyUsers);
     // 员工申请加入企业时更新员工信息
     void updateCompanyUserById(CompanyUser companyUser);
+    // 根据员工ID集合查询员工集合
+    List<CompanyUserDTO> queryCompanyUserByIds(List<Long> companyUserIds);
+    // 查询当前企业下所有的员工
+    List<CompanyUserDTO> queryAllCompanyUser(Long companyId);
 }

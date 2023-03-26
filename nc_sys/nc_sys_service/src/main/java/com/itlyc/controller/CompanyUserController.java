@@ -85,4 +85,25 @@ public class CompanyUserController {
         companyUserService.allowedJonCompany(applyUserId, approved, remark, notifyMsgId);
         return Result.success();
     }
+
+    /**
+     * 根据员工ID集合查询员工集合
+     * @param userIds
+     * @return
+     */
+    @GetMapping("/companyUser/queryByIds")
+    public Result<List<CompanyUserDTO>> queryCompanyUserByIds(@RequestParam("userIds") List<Long> userIds){
+        System.out.println(userIds);
+        companyUserService.queryCompanyUserByIds(userIds);
+        return Result.success(companyUserService.queryCompanyUserByIds(userIds));
+    }
+
+    /**
+     * 查询当前企业下所有员工
+     * @return
+     */
+    @GetMapping("/companyUser/list")
+    public Result<List<CompanyUserDTO>> queryAllCompanyUser(){
+        return Result.success(companyUserService.queryAllCompanyUser());
+    }
 }

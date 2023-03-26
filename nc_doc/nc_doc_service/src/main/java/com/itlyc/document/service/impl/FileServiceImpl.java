@@ -46,4 +46,14 @@ public class FileServiceImpl implements FileService {
     public List<File> queryCompanyFiles(Long companyId, Long all_read, Long all_read_write, Long parentFolderId, Long userId, String keyword) {
         return fileMapper.queryCompanyFiles(companyId, all_read, all_read_write, parentFolderId, userId, keyword);
     }
+
+    /**
+     * 根据文档id查询文档
+     * @param fileId 文档id
+     * @return
+     */
+    @Override
+    public File queryFileByFileId(Long fileId) {
+        return fileMapper.queryFileByFileId(fileId);
+    }
 }

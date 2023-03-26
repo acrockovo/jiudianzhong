@@ -70,4 +70,14 @@
         </set>
         where id = #{id}
     </update>
+    <select id="queryCompanyUserByIds" resultType="com.itlyc.sys.dto.CompanyUserDTO">
+        select * from sys_company_user where id in
+        <foreach collection="list" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="queryAllCompanyUser" resultType="com.itlyc.sys.dto.CompanyUserDTO">
+        select * from sys_company_user where company_id = #{companyId}
+    </select>
 </mapper>

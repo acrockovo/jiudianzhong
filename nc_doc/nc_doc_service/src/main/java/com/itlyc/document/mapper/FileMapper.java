@@ -12,4 +12,6 @@ public interface FileMapper {
     List<File> queryCompanyFiles(@Param("companyId") Long companyId, @Param("all_read") Long all_read,
                                  @Param("all_read_write") Long all_read_write, @Param("parentFolderId") Long parentFolderId,
                                  @Param("userId") Long userId, @Param("keyword") String keyword);
+    // 根据文档id查询文档
+    File queryFileByFileId(Long fileId);
 }

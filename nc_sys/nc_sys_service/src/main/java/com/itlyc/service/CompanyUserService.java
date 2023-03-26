@@ -23,4 +23,8 @@ public interface CompanyUserService {
     void applyJoinCompany(UserJoinCompanyDTO userJoinCompanyDTO);
     // 是否同意加入企业
     void allowedJonCompany(Long applyUserId, Boolean approved, String remark, String notifyMsgId);
+    // 根据用户id列表查询用户
+    List<CompanyUserDTO> queryCompanyUserByIds(List<Long> companyUserIds);
+    // 查询当前企业下所有的员工
+    List<CompanyUserDTO> queryAllCompanyUser();
 }

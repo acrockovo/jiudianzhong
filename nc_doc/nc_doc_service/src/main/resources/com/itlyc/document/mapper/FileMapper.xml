@@ -29,4 +29,8 @@
             </if>
         </where>
     </select>
+
+    <select id="queryFileByFileId" resultType="com.itlyc.document.entity.File">
+        select * from doc_file where id = #{fileId}
+    </select>
 </mapper>

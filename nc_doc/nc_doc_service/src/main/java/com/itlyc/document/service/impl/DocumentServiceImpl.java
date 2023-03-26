@@ -1,8 +1,13 @@
 package com.itlyc.document.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.itlyc.common.threadLocals.UserHolder;
+import com.itlyc.common.util.BeanHelper;
 import com.itlyc.common.util.CountUtil;
+import com.itlyc.common.vo.PageResult;
 import com.itlyc.document.dto.DocumentDTO;
+import com.itlyc.document.dto.UserCollaborationDTO;
+import com.itlyc.document.entity.Collaborations;
 import com.itlyc.document.entity.File;
 import com.itlyc.document.entity.FileHistory;
 import com.itlyc.document.entity.Folder;
@@ -12,6 +17,8 @@ import com.itlyc.document.mapper.FileMapper;
 import com.itlyc.document.service.DocumentService;
 import com.itlyc.document.service.FileHistoryService;
 import com.itlyc.document.service.FileService;
+import com.itlyc.sys.client.SysClient;
+import com.itlyc.sys.dto.CompanyUserDTO;
 import com.sun.org.apache.regexp.internal.RE;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -38,6 +45,8 @@ public class DocumentServiceImpl implements DocumentService {
     private FileService fileService;
     @Autowired
     private FileHistoryService fileHistoryService;
+    @Autowired
+    private SysClient sysClient;
 
     /**
      * 保存文件夹
@@ -123,5 +132,56 @@ public class DocumentServiceImpl implements DocumentService {
     private List<Folder> queryCompanyFolder(Long parentFolderId) {
         Long companyId = UserHolder.getCompanyId();
         return documentMapper.queryCompanyFolder(parentFolderId,companyId);
+    }
+
+    /**
+     * 查询指定文档的协作者列表
+     * @param fileId
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @Override
+    public PageResult<CompanyUserDTO> pagingCollaborations(Long fileId, Integer page, Integer pageSize) {
+        PageHelper.startPage(page, pageSize);
+        List<Collaborations> collaborations = documentMapper.queryCollaborationsByFileId(fileId);
+        if(!CollectionUtils.isEmpty(collaborations)){
+            List<Long> userIds = collaborations.stream().map(Collaborations::getCompanyUserId).collect(Collectors.toList());
+            List<CompanyUserDTO> companyUserDTOList = sysClient.queryCompanyUserByIds(userIds).getData();
+            return new PageResult<>(1L,2L,companyUserDTOList);
+        }
+        return null;
+    }
+
+    @Override
+    public List<UserCollaborationDTO> pagingCollaborationUsers(Long fileId) {
+        // 查询该企业下所有员工信息
+        List<CompanyUserDTO> companyUserDTOList = sysClient.queryAllCompanyUser().getData();
+        // 查询当前文档信息
+        File file = fileService.queryFileByFileId(fileId);
+        // 查询当前文档id下所有协作者信息
+        List<Collaborations> collaborations = documentMapper.queryCollaborationsByFileId(fileId);
+        if(!CollectionUtils.isEmpty(collaborations)){
+            // 拿到协作者id列表
+            List<Long> userIds = collaborations.stream().map(Collaborations::getCompanyUserId).collect(Collectors.toList());
+            List<UserCollaborationDTO> userCollaborationDTOS = BeanHelper.copyWithCollection(companyUserDTOList, UserCollaborationDTO.class);
+            if(!CollectionUtils.isEmpty(userCollaborationDTOS)){
+                // 循环所有员工
+                for (UserCollaborationDTO userCollaborationDTO : userCollaborationDTOS) {
+                    // 声明协作者标识 0既不是拥有者也不是协作者 1是拥有者 2是协作者
+                    Integer status = 0;
+                    // 判断是否是作者
+                    boolean equals = file.getCompanyUserId().equals(userCollaborationDTO.getId());
+                    status = equals ? DocumentEnum.USER_TYPE_AUTHOR.getVal() : DocumentEnum.USER_TYPE_NONE.getVal();
+                    // 判断是否是协作者
+                    if(userIds.contains(userCollaborationDTO.getId())){
+                        status = DocumentEnum.USER_TYPE_COLLABORATION.getVal();
+                    }
+                    userCollaborationDTO.setState(status);
+                }
+            }
+            return userCollaborationDTOS;
+        }
+        return null;
     }
 }

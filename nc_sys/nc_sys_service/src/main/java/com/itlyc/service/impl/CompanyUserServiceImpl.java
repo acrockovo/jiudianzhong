@@ -268,4 +268,27 @@ public class CompanyUserServiceImpl implements CompanyUserService {
         String status = approved ? "1" : "2";
         notifyMsgClient.updateNotifyMsgStatus(notifyMsgId, status);
     }
+
+    /**
+     * 根据员工ID集合查询员工集合
+     * @param companyUserIds
+     * @return
+     */
+    @Override
+    public List<CompanyUserDTO> queryCompanyUserByIds(List<Long> companyUserIds) {
+        return companyUserMapper.queryCompanyUserByIds(companyUserIds);
+    }
+
+    /**
+     * 查询当前企业下所有员工
+     * @return
+     */
+    @Override
+    public List<CompanyUserDTO> queryAllCompanyUser() {
+        List<CompanyUserDTO> companyUserDTOList = companyUserMapper.queryAllCompanyUser(UserHolder.getCompanyId());
+        if(CollectionUtils.isEmpty(companyUserDTOList)){
+            throw new NcException(ResponseEnum.ERROR);
+        }
+        return companyUserDTOList;
+    }
 }
